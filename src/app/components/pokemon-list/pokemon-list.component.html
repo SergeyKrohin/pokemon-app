@@ -1,0 +1,13 @@
+<span class="wrapper">
+	<div class="header">
+		<h3 class="title">Pokemon List</h3>
+		<input class="filter" placeholder="Filter name" type="text" [(ngModel)]="term" />
+	</div>
+	<ul class="list list-group">
+		<li class="list-group-item" *ngFor="let pokemon of pokemonList | filter:term:propName">
+			<span class="pokemon-name">{{pokemon.name}}</span>
+			<button class="btn" (click)="pokemonSelected(pokemon)">Show Evolution Chain</button>
+		</li>
+	</ul>
+</span>
+	

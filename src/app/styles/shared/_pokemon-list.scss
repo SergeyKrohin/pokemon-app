@@ -1,0 +1,59 @@
+$title_height: 45px;
+$title_margin: 30px;
+$list_margin: 20px;
+$line_height: 72px;
+$line_padding: 10px;
+
+@font-face {
+	font-family: PokemonSolid;
+	src: url(../../../app/assets/fonts/PokemonSolid.ttf);
+}
+
+.pokemon-list {
+
+	.filter {
+		vertical-align: 2px;
+		height: 30px;
+		padding: 10px;
+	}
+
+	.filter, .btn {
+		height: 35px;
+		width: 200px;
+	}
+
+	.title {
+		height: $title_height;
+		margin: $title_margin;
+		margin-left: 0;
+		width: 230px;
+		display: inline-block;
+		font-family: PokemonSolid;
+		color: #FECC07;
+		font-size: 30px;
+		text-stroke: 1px #3B69AC;	
+		-webkit-text-stroke: 1px #3B69AC;		
+	}
+
+	.list {
+		list-style: none;
+		height: calc(100% - #{$title_height + ($title_margin*2)});
+		overflow-y: auto;
+		li {
+			height: $line_height;
+			padding: $line_padding;
+			.pokemon-name {
+				display: inline-block;
+				width: 245px;
+				text-transform: capitalize;
+				font-size: 25px;
+				line-height: $line_height - $line_padding * 2;
+			}
+		}
+		.list-group-item {
+			background-color: rgba(255,255,255, .9);
+		}
+	}
+
+}
+
