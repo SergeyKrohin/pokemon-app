@@ -1,28 +1,28 @@
-# PokemonApp
+# Run the app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
+I used the angular cli for initial project structure and to save some time on the boilerplate code..
+Also I used bootstrap for some default styling.
 
-## Development server
+  - 1 Run npm i
+  - 2 Run ng serve
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# App structure
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+  - Modules:
+    - App - main module
+    - Shared - imports and exports all the reusable components - FilterPipe, LoaderComponent
+    - Dashboard - module that uses the shared module and also some angular's built in modules and also imports it's child componens
+    - Core - holds all the services in one place
+  - Components
+    -  App - main component
+    -  Dashboard - wraps router-outlet tag (a placeholder for app's routing) and uses loader component to show spinner when data is loaded
+    - PokemonList - displays a list with 100 pokemons. When one of the pokemons is selected it will navigate to evolution chain view and pass the id of the selected pokemon
+    -  EvolutionChain - recieves an evolution chain for a specific pokemon, converts the chain to a list using recursive function and displays the list
+    - LoaderComponent - subscribes to the loader service and recies a boolean value to know when to show or hide the pokeball loader
+ - Pipes
+    -  Filter - a simple filter pipe to filter the provided list
+ - Services
+    -  Http - http service to handle api calls
+    -  PokemonData - service that uses Http service and handles api calls which are specific for pokemon data
+    -  EvolutionChainResolver - used to resolve the route only after the showEvolutionChain call responses
+    -  LoaderService / LoaderInterceptor - intercepting http requests/responses to notify the LoaderComponent when to show or hide the loader
