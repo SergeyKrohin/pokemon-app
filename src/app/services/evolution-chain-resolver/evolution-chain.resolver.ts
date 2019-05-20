@@ -7,7 +7,7 @@ export class EvolutionChainResolver implements Resolve<any> {
 	
 	constructor(private pokemonDataService: PokemonDataService) {}
 	                
-	resolve(route, state) {
-		return this.pokemonDataService.showEvolutionChain(route.params['id']).first();
+	resolve(route) {
+		return this.pokemonDataService.showEvolutionChain(route.params['id']);//.first();
 	}
 }

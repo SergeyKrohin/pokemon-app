@@ -4,8 +4,12 @@ import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.ser
 import { EvolutionChainResolver } from '../../services/evolution-chain-resolver/evolution-chain.resolver';
 import { LoaderService, LoaderInterceptor } from '../../services/loader/loader.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
+	imports: [
+		HttpClientModule
+	],
 	providers: [
 		HttpService, 
 		PokemonDataService, 

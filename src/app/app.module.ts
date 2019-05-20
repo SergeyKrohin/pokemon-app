@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+//import { HttpModule } from '@angular/http';
+//import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { CoreModule } from './modules/core/core.module';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    HttpModule,
-	HttpClientModule,
+    /*HttpModule,*/
+	/*HttpClientModule,*/
 	DashboardModule,
 	CoreModule
   ],
