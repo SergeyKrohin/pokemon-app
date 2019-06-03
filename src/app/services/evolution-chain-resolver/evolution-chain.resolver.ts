@@ -8,6 +8,6 @@ export class EvolutionChainResolver implements Resolve<any> {
 	constructor(private pokemonDataService: PokemonDataService) {}
 	                
 	resolve(route) {
-		return this.pokemonDataService.showEvolutionChain(route.params['id']);//.first();
+		return this.pokemonDataService.showEvolutionChain(route.params['id']);
 	}
 }
