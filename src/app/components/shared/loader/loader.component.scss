@@ -12,24 +12,17 @@
 	left: 50%;
 	margin-left: -50px; 
 	margin-top: -50px; 
-	//z-index: 2;
 	width: 100px;
 	height: 100px;
-	//border-radius: 100px;
 	border-radius: 50%;
 	border: solid 4px black;
 	background: linear-gradient(to bottom, #EEEEEE 0%, #FFFFFF 100%);
-	//display: inline-block;
-	//text-align: center;
-	//cursor: pointer;
 	animation: spin .6s linear infinite;
 }
 
 .loader:before {
 	content: "";
 	display: block;
-	//height: 24px;
-	//width: 93px;
 	height: 50px;
 	border-bottom: solid 4px black;
 	border-radius: 100px 100px 0 0;
@@ -47,7 +40,6 @@
 	top: 50%;
 	margin-left: -10px; 
 	margin-top: -10px; 
-	//transform: translate(-50%, -50%);
 	border-radius: 50%;
 	box-shadow: 0 0 0 2px black, 0 0 0 12px #ddd, 0 0 0 14.28571px black, 0 0 20px 11.76471px rgba(0, 0, 0, 0.4);
 }
