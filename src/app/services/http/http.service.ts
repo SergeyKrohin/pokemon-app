@@ -8,10 +8,6 @@ export class HttpService {
 	
 	constructor(private http: HttpClient) {}
 	
-	private httpOptions = {
-		'Content-Type': 'application/json'
-	}
-	
 	public get(url):any {
 		return this.http.get(url)
 			.map(res => res)
