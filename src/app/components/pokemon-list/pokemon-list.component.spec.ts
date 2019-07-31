@@ -62,4 +62,15 @@ describe('PokemonListComponent', () => {
 		
 	});
 	
+	it('should render pokemons correctly from the service', () => {
+		mockPokemonDataService.getPokemonList.and.returnValue(Observable.of(POKEMONS));
+		
+		fixture.detectChanges();
+		
+		const pokemonDebugElements = fixture.debugElement.queryAll(By.css('li .pokemon-name'));
+		pokemonDebugElements.forEach((de, index) => {
+			expect(de.nativeElement.textContent).toEqual(POKEMONS[index].name);
+		});
+	});
+	
 });
