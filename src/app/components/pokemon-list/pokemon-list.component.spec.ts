@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { PokemonListComponent } from './pokemon-list.component';
 import { FormsModule } from '@angular/forms';
 import { Component, Pipe, NO_ERRORS_SCHEMA, PipeTransform } from '@angular/core';
@@ -7,17 +7,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { FilterPipe } from '../../pipes/filter.pipe';
 
 describe('PokemonListComponent', () => {
 	
 	let fixture, mockPokemonDataService, POKEMONS, mockRouter;
-
-	@Pipe({name: 'filter'})
-	class MockFilter implements PipeTransform {
-		transform(value: number): number {
-			return value;
-		}
-	}
 	
 	beforeEach(() => {
 		
@@ -35,7 +29,7 @@ describe('PokemonListComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [
 				PokemonListComponent,
-				MockFilter
+				FilterPipe
 			],
 			imports: [
 				FormsModule/*, 
@@ -78,24 +72,27 @@ describe('PokemonListComponent', () => {
 		});
 	});
 	
-	it('should have the correct route for the first pokemon', () => {
+	it('should have the correct route when pokemon is selected', () => {
 		mockPokemonDataService.getPokemonList.and.returnValue(Observable.of(POKEMONS));
-		mockPokemonDataService.getPokemon.and.returnValue(Observable.of({
-														"name": "ivysaur", 
-														"url": "https://pokeapi.co/api/v2/pokemon-species/2/"
-													}));
-		
-		fixture.componentInstance.extractId = (evolutionChain) => {return 1}
+		mockPokemonDataService.getPokemon.and.returnValue(Observable.of({evolution_chain: {url: "https://pokeapi.co/api/v2/evolution-chain/1/"}}));
 		
 		fixture.detectChanges();
-		
-		
 		let listItemFirstBtn = fixture.debugElement.queryAll(By.css('li button'))[0];
-		
 		listItemFirstBtn.triggerEventHandler('click', {});
 		
-		expect(mockRouter.navigate).toHaveBeenCalledWith ([ '/evolution-chain', 1 ]);
+		expect(mockRouter.navigate).toHaveBeenCalledWith ([ '/evolution-chain', '1' ]);
+	});
+	
+	it('should filter the list when pokemon name is entered to the filter box', () => {
+		mockPokemonDataService.getPokemonList.and.returnValue(Observable.of(POKEMONS));
 		
+		fixture.detectChanges();
+		let input = fixture.debugElement.query(By.css('input')).nativeElement;
+		input.value = 'dod';
+		input.dispatchEvent(new Event('input'));
+		fixture.detectChanges();
+		
+		expect(fixture.debugElement.queryAll(By.css('li')).length).toEqual(2);
 	});
 	
 });
