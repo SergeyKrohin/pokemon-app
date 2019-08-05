@@ -21,7 +21,7 @@ describe('PokemonListComponent', () => {
 			{"name":"dodrio","url":"https://pokeapi.co/api/v2/pokemon-species/85/"}
 		];
 		
-		mockPokemonDataService = jasmine.createSpyObj('mockPokemonDataService', ['getPokemonList', 'getPokemon', 'showEvolutionChain']);
+		mockPokemonDataService = jasmine.createSpyObj('mockPokemonDataService', ['getPokemonList', 'getPokemon']);
 		mockRouter = {
 			navigate: jasmine.createSpy('navigate')
 		}

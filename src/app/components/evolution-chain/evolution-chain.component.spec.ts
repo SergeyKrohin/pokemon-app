@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 
 describe('EvolutionChainComponent', () => {
 	
-	let fixture, mockPokemonDataService;
+	let fixture, mockPokemonDataService, EVOLUTION_CHAIN;
 	
 	@Pipe({name: 'filter'})
 	class MockFilter implements PipeTransform {
@@ -20,7 +20,40 @@ describe('EvolutionChainComponent', () => {
 	
 	beforeEach(() => {
 		
-		mockPokemonDataService = jasmine.createSpyObj('mockPokemonDataService', ['getPokemonList', 'getPokemon', 'showEvolutionChain']);
+		EVOLUTION_CHAIN = {
+			"chain": {
+				"evolves_to": [
+					{
+						"evolves_to": [
+							{
+								"evolves_to": [],
+								"species": {
+									"name": "vileplume",
+									"url": "https://pokeapi.co/api/v2/pokemon-species/45/"
+								}
+							},
+							{
+								"evolves_to": [],
+								"species": {
+									"name": "bellossom",
+									"url": "https://pokeapi.co/api/v2/pokemon-species/182/"
+								}
+							}
+						],
+						"species": {
+							"name": "gloom",
+							"url": "https://pokeapi.co/api/v2/pokemon-species/44/"
+						}
+					}
+				],
+				"species": {
+					"name": "oddish",
+					"url": "https://pokeapi.co/api/v2/pokemon-species/43/"
+				}
+			}
+		};
+		
+		mockPokemonDataService = jasmine.createSpyObj('mockPokemonDataService', ['showEvolutionChain']);
 		
 		TestBed.configureTestingModule({
 			declarations: [
@@ -46,9 +79,13 @@ describe('EvolutionChainComponent', () => {
 		
 	});
 	
-	it('should', () => {
+	it('should render "Evoution Chain" title', () => {
 		let title = fixture.debugElement.query(By.css('h3')).nativeElement;
 		expect(title.textContent).toEqual('Evolution Chain');
+	});
+	
+	it('should convert chain object to list', () => {
+		
 	});
 	
 });
