@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 
 describe('EvolutionChainComponent', () => {
 	
-	let fixture, mockPokemonDataService, EVOLUTION_CHAIN;
+	let fixture, mockPokemonDataService, EVOLUTION_CHAIN, EVOLUTION_CHAIN_LIST;
 	
 	@Pipe({name: 'filter'})
 	class MockFilter implements PipeTransform {
@@ -53,6 +53,21 @@ describe('EvolutionChainComponent', () => {
 			}
 		};
 		
+		EVOLUTION_CHAIN_LIST = [
+			{
+				"name": "oddish"
+			},
+			{
+				"name": "gloom"
+			},
+			{
+				"name": "vileplume"
+			},
+			{
+				"name": "bellossom"
+			}
+		];
+		
 		mockPokemonDataService = jasmine.createSpyObj('mockPokemonDataService', ['showEvolutionChain']);
 		
 		TestBed.configureTestingModule({
@@ -85,7 +100,9 @@ describe('EvolutionChainComponent', () => {
 	});
 	
 	it('should convert chain object to list', () => {
+		const convertedList = fixture.componentInstance.chainToList(EVOLUTION_CHAIN.chain);
 		
+		expect(convertedList).toEqual(EVOLUTION_CHAIN_LIST);
 	});
 	
 });
