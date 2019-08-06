@@ -5,20 +5,15 @@ import { HttpService } from '../http/http.service';
 
 describe('PokemonDataService', () => {
 	
-	let pokemonDataService, httpTestingController, mockHttpService;
+	let pokemonDataService, httpTestingController, mockHttpService, getPokemonUrl = 'https://pokeapi.co/api/v2/pokemon-species/';
 	
 	beforeEach(() => {
-		
-		mockHttpService = jasmine.createSpyObj('mockHttpService', ['get']);
 		
 		TestBed.configureTestingModule({
 			imports: [ HttpClientTestingModule ],
 			providers: [ 
 				PokemonDataService,
-				{ 
-					provide: HttpService, 
-					useValue: mockHttpService 
-				}
+				HttpService
 			]
 		});
 		
@@ -28,8 +23,12 @@ describe('PokemonDataService', () => {
 	});
 	
 	describe('getPokemon', () => {
-		it('should', () => {
-			//pokemonDataService.getPokemon(1).subscribe();
+		it('should call get with the correct url', () => {
+			pokemonDataService.getPokemon('bulbasaur').subscribe();
+			
+			const req = httpTestingController.expectOne(getPokemonUrl + 'bulbasaur/');
+			req.flush({name: 'bulbasaur'}); 
+			httpTestingController.verify();
 		});
 	});
 });
