@@ -6,7 +6,9 @@
 	<ul class="list list-group">
 		<li class="list-group-item" *ngFor="let pokemon of pokemonList | filter:term:propName">
 			<span class="pokemon-name">{{pokemon.name}}</span>
-			<button class="btn" (click)="pokemonSelected(pokemon)">Show Evolution Chain</button>
+			<button class="btn" (click)="showEvolutionChain(pokemon)">Show Evolution Chain</button>
+			<button class="btn" (click)="showDescription(pokemon)">Show Description</button>
+			<span *ngIf="selectedPokemon.name === pokemon.name" class="pokemon-description">{{selectedPokemon.description}}</span>
 		</li>
 	</ul>
 </span>

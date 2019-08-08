@@ -3,6 +3,7 @@ import { AppComponent } from './app.component';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { CoreModule } from './modules/core/core.module';
 import { HttpClientModule } from '@angular/common/http';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -15,11 +16,13 @@ describe('AppComponent', () => {
 		HttpClientModule,
 		CoreModule
 	  ],
-	  providers: []
+	  providers: [
+		{provide: APP_BASE_HREF, useValue : '/' }
+	  ]
     }).compileComponents();
   }));
 
-  xit('should create the app', async(() => {
+  it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();

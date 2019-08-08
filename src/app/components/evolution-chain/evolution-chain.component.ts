@@ -34,6 +34,7 @@ export class EvolutionChainComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		const routeSub = this.route.data.subscribe((data) => {
 			this.pokemonList = this.chainToList(data['evolutionChain'].chain); 
+			debugger;
 		});
 		this.subscriptions.push(routeSub);
 	}

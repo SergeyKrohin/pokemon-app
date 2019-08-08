@@ -18,17 +18,51 @@ export class PokemonListComponent implements OnInit {
 	public propName = 'name';
 	private subscriptions = [];
 	private listLimit = 100;
+	public selectedPokemon: any = {};
 	
-	public pokemonSelected(pokemon) {
+	public showEvolutionChain(pokemon) {
 		const getPokemonSub = this.pokemonDataService.getPokemon(pokemon.name).subscribe((pokemon) => {
-			this.router.navigate(['/evolution-chain', this.extractId(pokemon.evolution_chain)]);
+			this.router.navigate(['/evolution-chain', this.extractId(pokemon.evolution_chain.url)]);
 		});		
 		this.subscriptions.push(getPokemonSub);
 	}
 	
-	private extractId(chain) {
-		const splittedUrl = chain.url.split('/');
+	public showDescription(pokemon) {
+		
+		this.debounce(() => {		
+
+			this.selectedPokemon.name = pokemon.name;
+			this.pokemonDataService.getCharacteristics(this.extractId(pokemon.url)).subscribe((characteristics) => {
+				this.selectedPokemon.description = this.getEnglishDescription(characteristics.descriptions);
+			});
+
+		}, 250, false)();
+		
+
+	}
+	
+	private getEnglishDescription(descriptions) {
+		return descriptions.find(desc => desc.language.name === 'en').description;		
+	}
+	
+	private extractId(url) {
+		const splittedUrl = url.split('/');
 		return splittedUrl[splittedUrl.length - 2];
+	}
+	
+	private debounce(func, wait, immediate) {
+		var timeout;
+		return function() {
+			var context = this, args = arguments;
+			var later = function() {
+				timeout = null;
+				if(!immediate) func.apply(context, args);
+			};
+			var callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
+		};
 	}
 	
 	ngOnInit() {

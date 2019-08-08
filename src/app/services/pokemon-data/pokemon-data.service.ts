@@ -21,6 +21,12 @@ export class PokemonDataService {
 		});
 	}
 	
+	public getCharacteristics(id):any {
+		return this.httpService.get(this.url + 'characteristic/' + id + '/').map((response) => {
+			return response;
+		});
+	}
+	
 	public showEvolutionChain(id):any {
 		return this.httpService.get(this.url + 'evolution-chain/' + id +'/').map((response) => {
 			return response;
