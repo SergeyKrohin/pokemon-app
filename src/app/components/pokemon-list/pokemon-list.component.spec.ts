@@ -11,7 +11,7 @@ import { FilterPipe } from '../../pipes/filter.pipe';
 
 describe('PokemonListComponent', () => {
 	
-	let fixture, mockPokemonDataService, POKEMONS, mockRouter;
+	let fixture, mockPokemonDataService, POKEMONS, CHARACTERISTICS, mockRouter;
 	
 	beforeEach(() => {
 		
@@ -21,7 +21,26 @@ describe('PokemonListComponent', () => {
 			{"name":"dodrio","url":"https://pokeapi.co/api/v2/pokemon-species/85/"}
 		];
 		
-		mockPokemonDataService = jasmine.createSpyObj('mockPokemonDataService', ['getPokemonList', 'getPokemon']);
+		CHARACTERISTICS = {
+		  "descriptions": [
+			{
+			  "description": "Adore manger",
+			  "language": {
+				"name": "fr",
+				"url": "https://pokeapi.co/api/v2/language/5/"
+			  }
+			},
+			{
+			  "description": "Loves to eat",
+			  "language": {
+				"name": "en",
+				"url": "https://pokeapi.co/api/v2/language/9/"
+			  }
+			}
+		  ]
+		};
+		
+		mockPokemonDataService = jasmine.createSpyObj('mockPokemonDataService', ['getPokemonList', 'getPokemon', 'getCharacteristics']);
 		mockRouter = {
 			navigate: jasmine.createSpy('navigate')
 		}
@@ -77,8 +96,8 @@ describe('PokemonListComponent', () => {
 		mockPokemonDataService.getPokemon.and.returnValue(Observable.of({evolution_chain: {url: "https://pokeapi.co/api/v2/evolution-chain/1/"}}));
 		
 		fixture.detectChanges();
-		let listItemFirstBtn = fixture.debugElement.queryAll(By.css('li button'))[0];
-		listItemFirstBtn.triggerEventHandler('click', {});
+		let showEvolutionChainBtn = fixture.debugElement.queryAll(By.css('li #show-evolutin-chain-btn'))[0];
+		showEvolutionChainBtn.triggerEventHandler('click', {});
 		
 		expect(mockRouter.navigate).toHaveBeenCalledWith ([ '/evolution-chain', '1' ]);
 	});
@@ -93,6 +112,18 @@ describe('PokemonListComponent', () => {
 		fixture.detectChanges();
 		
 		expect(fixture.debugElement.queryAll(By.css('li')).length).toEqual(2);
+	});
+	
+	it('should show description text when "show description" button is pressed', () => {
+		mockPokemonDataService.getPokemonList.and.returnValue(Observable.of(POKEMONS));
+		mockPokemonDataService.getCharacteristics.and.returnValue(Observable.of(CHARACTERISTICS));
+		
+		fixture.detectChanges();
+		let showDescriptionBtn = fixture.debugElement.queryAll(By.css('li #show-description-btn'))[0];
+		showDescriptionBtn.triggerEventHandler('click', {});
+		
+		console.log(fixture.debugElement.queryAll(By.css('li span'))[0].nativeElement.textContent);
+		
 	});
 	
 });
