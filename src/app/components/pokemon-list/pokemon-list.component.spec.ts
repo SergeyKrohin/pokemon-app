@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, fakeAsync, flush } from '@angular/core/testing';
 import { PokemonListComponent } from './pokemon-list.component';
 import { FormsModule } from '@angular/forms';
 import { Component, Pipe, NO_ERRORS_SCHEMA, PipeTransform } from '@angular/core';
@@ -114,16 +114,18 @@ describe('PokemonListComponent', () => {
 		expect(fixture.debugElement.queryAll(By.css('li')).length).toEqual(2);
 	});
 	
-	it('should show description text when "show description" button is pressed', () => {
+	it('should show description text when "show description" button is pressed', fakeAsync(() => {
 		mockPokemonDataService.getPokemonList.and.returnValue(Observable.of(POKEMONS));
 		mockPokemonDataService.getCharacteristics.and.returnValue(Observable.of(CHARACTERISTICS));
-		
 		fixture.detectChanges();
+		
 		let showDescriptionBtn = fixture.debugElement.queryAll(By.css('li #show-description-btn'))[0];
 		showDescriptionBtn.triggerEventHandler('click', {});
+		flush();
+		fixture.detectChanges();
 		
-		console.log(fixture.debugElement.queryAll(By.css('li span'))[0].nativeElement.textContent);
-		
-	});
+		let pokemonDescription = fixture.debugElement.queryAll(By.css('li .pokemon-description'))[0];
+		expect(pokemonDescription.nativeElement.textContent).toEqual(CHARACTERISTICS.descriptions[1].description);
+	}));
 	
 });

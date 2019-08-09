@@ -28,15 +28,14 @@ export class PokemonListComponent implements OnInit {
 	}
 	
 	public showDescription(pokemon) {
-		
-		//this.debounce(() => {		
+		this.debounce(() => {		
 
 			this.selectedPokemon.name = pokemon.name;
 			this.pokemonDataService.getCharacteristics(this.extractId(pokemon.url)).subscribe((characteristics) => {
 				this.selectedPokemon.description = this.getEnglishDescription(characteristics.descriptions);
 			});
 
-		//}, 250, false)();
+		}, 100, false)();
 		
 
 	}
