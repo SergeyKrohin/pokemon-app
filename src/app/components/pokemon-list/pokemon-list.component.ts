@@ -13,18 +13,16 @@ export class PokemonListComponent implements OnInit {
 	
 	constructor(private pokemonDataService: PokemonDataService, private router: Router){}
 
-	public pokemonList = [];
-	public term = '';
-	public propName = 'name';
-	private subscriptions = [];
-	private listLimit = 100;
-	public selectedPokemon: any = {};
+	public pokemonList: Array<Object> = [];
+	public term: string = '';
+	public propName: string = 'name';
+	private listLimit: number = 100;
+	public selectedPokemon: {name: string, description: string} = {name: '', description: ''};
 	
 	public showEvolutionChain(pokemon) {
 		const getPokemonSub = this.pokemonDataService.getPokemon(pokemon.name).subscribe((pokemon) => {
 			this.router.navigate(['/evolution-chain', this.extractId(pokemon.evolution_chain.url)]);
 		});		
-		this.subscriptions.push(getPokemonSub);
 	}
 	
 	public showDescription(pokemon) {
@@ -65,15 +63,9 @@ export class PokemonListComponent implements OnInit {
 	}
 	
 	ngOnInit() {
-		const pokemonListSub = this.pokemonDataService.getPokemonList(this.listLimit).subscribe((result) => {
+		this.pokemonDataService.getPokemonList(this.listLimit).subscribe((result) => {
 			this.pokemonList = result;
 		});
-		this.subscriptions.push(pokemonListSub);
 	}
-	
-	ngOnDestroy() {
-		this.subscriptions.forEach((sub) => {
-			sub.unsubscribe();
-		});
-	}
+
 }
