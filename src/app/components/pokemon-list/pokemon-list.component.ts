@@ -15,11 +15,11 @@ export class PokemonListComponent implements OnInit {
 
 	constructor(private pokemonDataService: PokemonDataService, private router: Router){}
 
-	public pokemonList: Array<Object> = [];
-	public term: string = '';
-	public propName: string = 'name';
-	private listLimit: number = 100;
-	public selectedPokemon: ISelectedPokemon = {name: '', description: ''};
+	public pokemonList:Array<Object> = [];
+	public term:string = '';
+	public propName:string = 'name';
+	private listLimit:number = 100;
+	public selectedPokemon:ISelectedPokemon = {name: '', description: ''};
 	
 	public showEvolutionChain(pokemon):void {
 		const getPokemonSub = this.pokemonDataService.getPokemon(pokemon.name).subscribe((pokemon) => {
@@ -39,7 +39,7 @@ export class PokemonListComponent implements OnInit {
 		}, 100, false)();
 	}
 	
-	private getEnglishDescription(descriptions): string {
+	private getEnglishDescription(descriptions):string {
 		return descriptions.find(desc => desc.language.name === 'en').description;		
 	}
 	

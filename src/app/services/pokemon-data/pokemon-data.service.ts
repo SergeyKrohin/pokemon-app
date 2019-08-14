@@ -22,7 +22,7 @@ export class PokemonDataService {
 	}
 	
 	public getCharacteristics(id):any {
-		return this.httpService.get(this.url + 'characteristic/' + id + '/').map((response) => {debugger;
+		return this.httpService.get(this.url + 'characteristic/' + id + '/').map((response) => {
 			return response;
 		});
 	}

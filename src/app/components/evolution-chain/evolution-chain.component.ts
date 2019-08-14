@@ -1,7 +1,11 @@
 import { HttpService } from '../../services/http/http.service';
 import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+interface Pokemon {
+	name: string;
+}
 
 @Component({
 	selector: 'evolution-chain',
@@ -9,16 +13,15 @@ import { ActivatedRoute } from '@angular/router';
 	styleUrls: ['./evolution-chain.component.scss']
 })
 
-export class EvolutionChainComponent implements OnInit, OnDestroy {
+export class EvolutionChainComponent implements OnInit {
 	
 	constructor(private pokemonDataService: PokemonDataService, private route: ActivatedRoute){}
 
-	public pokemonList = [];
-	public term = '';
-	public propName = 'name';
-	private subscriptions = [];
+	public pokemonList: Array<Pokemon>;
+	public term:string = '';
+	public propName:string = 'name';
 	
-	private chainToList(evolutionChain) {	
+	private chainToList(evolutionChain):Array<Pokemon> {	
 		const list = []; 
 		(function chain(evolutionChain) {
 			list.push({name: evolutionChain.species.name});
@@ -27,21 +30,13 @@ export class EvolutionChainComponent implements OnInit, OnDestroy {
 					chain(item);
 				});
 			}
-		})(evolutionChain)
+		})(evolutionChain);
 		return list;
 	}
 	
 	ngOnInit() {
-		const routeSub = this.route.data.subscribe((data) => {
+		this.route.data.subscribe((data) => {
 			this.pokemonList = this.chainToList(data['evolutionChain'].chain); 
-			debugger;
-		});
-		this.subscriptions.push(routeSub);
-	}
-	
-	ngOnDestroy() {
-		this.subscriptions.forEach((sub) => {
-			sub.unsubscribe();
 		});
 	}
 }
