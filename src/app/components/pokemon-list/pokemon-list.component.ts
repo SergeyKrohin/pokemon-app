@@ -23,8 +23,8 @@ export class PokemonListComponent implements OnInit {
 	
 	public showEvolutionChain(pokemon):void {
 		const getPokemonSub = this.pokemonDataService.getPokemon(pokemon.name).subscribe((pokemon) => {
-			let test = this.extractId(pokemon.evolution_chain.url);
-			this.router.navigate(['/evolution-chain', test]);
+			const chainUrl = this.extractId(pokemon.evolution_chain.url);
+			this.router.navigate(['/evolution-chain', chainUrl]);
 		});		
 	}
 	
